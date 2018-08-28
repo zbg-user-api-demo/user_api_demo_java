@@ -3,3 +3,6 @@
 
 ### 项目依赖
 此项目主要依赖了Apache的Httpclient项目、libaba的Fastjson项目A、org.java-websocket项目，需要使用maven等方式引用的可以自行引用这些项目。# test
+
+##地址
+https://github.com/liqiangqiang-test/user_api_demo_java.git
