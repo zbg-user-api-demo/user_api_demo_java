@@ -5,4 +5,4 @@
 此项目主要依赖了Apache的Httpclient项目、libaba的Fastjson项目A、org.java-websocket项目，需要使用maven等方式引用的可以自行引用这些项目。
 
 ##test地址
-https://github.com/liqiangqiang-test/user_api_demo_java.git
+https://github.com/zbg-user-api-demo/user_api_demo_java.git
