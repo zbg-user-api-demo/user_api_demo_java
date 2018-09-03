@@ -65,9 +65,9 @@ public class ApiTest {
         String amount = "1.1";
         String price = "5.05";
         //TODO:测试此接口时注意先调好价格和数量，避免失误下单  ，参数type买卖类型：0 卖出 1 购买
-        String result = Api.addEntrust(TEST_MARKET_NAME, amount, price, 0, 0);
+        /*String result = Api.addEntrust(TEST_MARKET_NAME, amount, price, 0, 0);
         printfResult(result);
-        Assert.assertTrue(HttpResponseParser.isSucc(result));
+        Assert.assertTrue(HttpResponseParser.isSucc(result));*/
     }
 
     @Test
