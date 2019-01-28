@@ -2,6 +2,7 @@ package io.at.api.untils;
 
 import com.alibaba.fastjson.JSON;
 
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import java.util.TreeMap;
  * @Modified By:
  */
 public class SignUtils {
+    private static Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
     /**
      * 自行根据需要设置,一般认为一个服务里使用的只有一个
@@ -90,7 +92,7 @@ public class SignUtils {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance(code);
             messageDigest.reset();
-            messageDigest.update(str.getBytes());
+            messageDigest.update(str.getBytes(DEFAULT_CHARSET));
             byte[] byteArray = messageDigest.digest();
             StringBuffer md5StrBuff = new StringBuffer();
 

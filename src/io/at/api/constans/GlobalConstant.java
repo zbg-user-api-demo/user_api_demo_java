@@ -52,9 +52,13 @@ public class GlobalConstant {
      */
     public static final String API_USER_ENTRUST_BY_ID ="/exchange/entrust/controller/website/EntrustController/getEntrustById";
     /**
-     * url 从缓存中获取用户还未成交的委托记录
+     * url 从缓存中获取用户还未成交的委托记录，新版，支持分页
      */
     public static final String API_USER_FROM_CACHE_RECORD="/exchange/entrust/controller/website/EntrustController/getUserEntrustRecordFromCache";
+    /**
+     * url 分页从缓存中获取用户还未成交的委托记录(旧版)，无分页，最多获取20条
+     */
+    public static final String API_USER_FROM_CACHE_RECORD_WITH_PAGE="/exchange/entrust/controller/website/EntrustController/getUserEntrustRecordFromCacheWithPage";
     /**
      * url 分页获取用户的委托记录
      */

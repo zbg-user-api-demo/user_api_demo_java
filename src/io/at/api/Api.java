@@ -29,7 +29,7 @@ public class Api {
         header = SignUtils.getHeaderOfNoParams(GlobalConstant.API_ID, GlobalConstant.API_SECRET);
 
         try {
-            String returnMsg = HttpUtils.doGet(GlobalConstant.ES_HOST, GlobalConstant.API_GET_USER_INFO, null, header, 10);
+            String returnMsg = HttpUtils.doPost(GlobalConstant.ES_HOST, GlobalConstant.API_GET_USER_INFO, null, header, 10);
             return returnMsg;
         } catch (Exception e) {
             e.printStackTrace();
@@ -147,13 +147,38 @@ public class Api {
     }
 
     /**
-     * 从缓存中获取用户在某市场还未成交的委托记录
+     * 分页从缓存中获取用户在某市场还未成交的委托记录（新版接口）
+     *
+     * @param marketName
+     * @return
+     */
+    public static String getUserEntrustRecordFromCacheWithPage(String marketName, int pageIndex, int pageSize) {
+        String marketId = MarketCache.getMarketIdByName(marketName);
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("marketId", marketId);
+        paramMap.put("pageSize", pageSize);
+        paramMap.put("pageIndex", pageIndex);//页码，从1开始计算
+
+        Map<String, String> header;
+        header = SignUtils.getHeaderOfKeyValue(GlobalConstant.API_ID, GlobalConstant.API_SECRET, paramMap);
+
+        try {
+            String returnMsg = HttpUtils.doGet(GlobalConstant.ES_HOST, GlobalConstant.API_USER_FROM_CACHE_RECORD_WITH_PAGE, paramMap, header, 10);
+            return returnMsg;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * 从缓存中获取用户在某市场还未成交的委托记录(旧版接口)，无分页，最多只能获取到20条
      *
      * @param marketName
      * @return
      */
     public static String getUserEntrustRecordFromCache(String marketName) {
-
         String marketId = MarketCache.getMarketIdByName(marketName);
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("marketId", marketId);
@@ -169,7 +194,6 @@ public class Api {
         }
 
         return null;
-
     }
 
     /**
@@ -178,16 +202,35 @@ public class Api {
      * @param marketName
      * @param paegSize
      * @param pageIndex
+     * @param type      （可选）委托类型，0 卖出 1 购买  -1 取消
+     * @param status     （可选）状态 : -2资金解冻失败 -1用户资金不足 0起始 1取消 2交易成功 3交易一部
+     * @param startDateTime   （可选）委托下单的起始时间，13位时间戳
+     * @param endDateTime     （可选）委托下单的结束时间，13位时间戳
      * @return
      */
-    public static String getUserEntrustList(String marketName,/*String userId,*/Integer pageIndex, Integer paegSize) {
+    public static String getUserEntrustList(String marketName,Integer pageIndex, Integer paegSize,Integer type,
+                                            Integer status,Long startDateTime,Long endDateTime) {
 
         String marketId = MarketCache.getMarketIdByName(marketName);
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("marketId", marketId);
-        // paramMap.put("userId",userId);
         paramMap.put("pageIndex", pageIndex);
         paramMap.put("pageSize", paegSize);
+        if(type != null){
+            paramMap.put("type",type);
+        }
+
+        if(status != null){
+            paramMap.put("status",status);
+        }
+
+        if(startDateTime != null){
+            paramMap.put("startDateTime",startDateTime);
+        }
+
+        if(endDateTime != null){
+            paramMap.put("endDateTime",endDateTime);
+        }
 
         Map<String, String> header;
         header = SignUtils.getHeaderOfKeyValue(GlobalConstant.API_ID, GlobalConstant.API_SECRET, paramMap);
