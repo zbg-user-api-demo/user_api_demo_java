@@ -35,8 +35,8 @@ public class ApiTest {
 
         //TODO:API_ID和API_SECRET请自行设置
         //测试环境id
-        GlobalConstant.API_ID="7eOiWtBG56e7eOiWtBG56f";
-        GlobalConstant.API_SECRET="91ab5ef791cfe92fdb849869ab011cee";
+        GlobalConstant.API_ID = "7eOiWtBG56e7eOiWtBG56f";
+        GlobalConstant.API_SECRET = "91ab5ef791cfe92fdb849869ab011cee";
     }
 
     @Test
@@ -65,9 +65,9 @@ public class ApiTest {
         String amount = "1.1";
         String price = "5.05";
         //TODO:测试此接口时注意先调好价格和数量，避免失误下单  ，参数type买卖类型：0 卖出 1 购买
-        /*String result = Api.addEntrust(TEST_MARKET_NAME, amount, price, 0, 0);
-        printfResult(result);
-        Assert.assertTrue(HttpResponseParser.isSucc(result));*/
+//        String result = Api.addEntrust(TEST_MARKET_NAME, amount, price, 0, 0);
+//        printfResult(result);
+//        Assert.assertTrue(HttpResponseParser.isSucc(result));
     }
 
     @Test
@@ -86,6 +86,12 @@ public class ApiTest {
         Assert.assertTrue(HttpResponseParser.isSucc(result));
     }
 
+    @Test
+    public void getUserEntrustRecordFromCacheWithPage() throws Exception {
+        String result = Api.getUserEntrustRecordFromCacheWithPage(TEST_MARKET_NAME, 1, 5);
+        printfResult(result);
+        Assert.assertTrue(HttpResponseParser.isSucc(result));
+    }
 
     @Test
     public void getUserEntrustRecordFromCache() throws Exception {
@@ -96,7 +102,17 @@ public class ApiTest {
 
     @Test
     public void getUserEntrustList() throws Exception {
-        String result = Api.getUserEntrustList(TEST_MARKET_NAME, 1, 10);
+        Integer type = null;
+        Integer status = null;
+        Long startDateTime = null;
+        Long endDateTime = null;
+
+        //可选参数自行选择
+//        type = 0;         //（可选）委托类型，0 卖出 1 购买  -1 取消
+//        status = 1;       //（可选）状态 : -2资金解冻失败 -1用户资金不足 0起始 1取消 2交易成功 3交易一部
+//        startDateTime = 1548225569699L;       //（可选）委托下单的起始时间，13位时间戳
+//        endDateTime = 1548225569699L;         //（可选）委托下单的结束时间，13位时间戳
+        String result = Api.getUserEntrustList(TEST_MARKET_NAME, 1, 10, type, status, startDateTime, endDateTime);
         printfResult(result);
         Assert.assertTrue(HttpResponseParser.isSucc(result));
     }
@@ -179,7 +195,7 @@ public class ApiTest {
             return;
         }
         try {
-            Map<String,String> header = new HashMap<String,String>();
+            Map<String, String> header = new HashMap<String, String>();
             header.put("User-Agent", "UserApi Http Client");
             URI uri = new URI(GlobalConstant.KLINE_WS_HOST + GlobalConstant.WEBSOCKET_PATH);
             WsCustomClient wsCustomClient = new WsCustomClient(uri, header, marketId, TEST_MARKET_NAME);
