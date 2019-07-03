@@ -27,7 +27,6 @@ public class Api {
 
         Map<String, String> header;
         header = SignUtils.getHeaderOfNoParams(GlobalConstant.API_ID, GlobalConstant.API_SECRET);
-
         try {
             String returnMsg = HttpUtils.doPost(GlobalConstant.ES_HOST, GlobalConstant.API_GET_USER_INFO, null, header, 10);
             return returnMsg;
