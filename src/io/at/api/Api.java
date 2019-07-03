@@ -2,7 +2,6 @@ package io.at.api;
 
 
 import io.at.api.cache.CurrencyCache;
-import io.at.api.cache.MarketCache;
 import io.at.api.constans.GlobalConstant;
 import io.at.api.untils.HttpUtils;
 import io.at.api.untils.SignUtils;
@@ -75,11 +74,12 @@ public class Api {
      * @return
      */
     public static String addEntrust(String marketName, String amount, String price, Integer rangeType, Integer type) {
-
-        String marketId = MarketCache.getMarketIdByName(marketName);
-
         Map<String, Object> bodyEntrustMap = new HashMap();
-        bodyEntrustMap.put("marketId", marketId);
+
+        /*String marketId = MarketCache.getMarketIdByName(marketName);
+        bodyEntrustMap.put("marketId", marketId); 不建议继续使用，直接使用更直观的marketName，格式：zt_usdt*/
+
+        bodyEntrustMap.put("marketName", marketName);
         bodyEntrustMap.put("amount", amount);
         bodyEntrustMap.put("price", price);
         bodyEntrustMap.put("rangeType", rangeType);//目前只有限价委托，rangType默认为0
@@ -104,9 +104,11 @@ public class Api {
      */
     public static String cancelEntrust(String marketName, String entrustId) {
 
-        String marketId = MarketCache.getMarketIdByName(marketName);
         Map<String, Object> entrustMap = new HashMap<String, Object>();
-        entrustMap.put("marketId", marketId);
+        /*String marketId = MarketCache.getMarketIdByName(marketName);
+        entrustMap.put("marketId", marketId); 不建议继续使用，直接使用更直观的marketName，格式：zt_usdt*/
+
+        entrustMap.put("marketName", marketName);
         entrustMap.put("entrustId", entrustId);
         Map<String, String> header;
         header = SignUtils.getHeaderOfBodyJson(GlobalConstant.API_ID, GlobalConstant.API_SECRET, entrustMap);
@@ -126,10 +128,11 @@ public class Api {
      * @return
      */
     public static String getEntrustById(String marketName, String entrustId) {
-
-        String marketId = MarketCache.getMarketIdByName(marketName);
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        paramMap.put("marketId", marketId);
+        /*String marketId = MarketCache.getMarketIdByName(marketName);
+        paramMap.put("marketId", marketId); 不建议继续使用，直接使用更直观的marketName，格式：zt_usdt*/
+
+        paramMap.put("marketName", marketName);
         paramMap.put("entrustId", entrustId);
         Map<String, String> header;
         header = SignUtils.getHeaderOfKeyValue(GlobalConstant.API_ID, GlobalConstant.API_SECRET, paramMap);
@@ -152,9 +155,11 @@ public class Api {
      * @return
      */
     public static String getUserEntrustRecordFromCacheWithPage(String marketName, int pageIndex, int pageSize) {
-        String marketId = MarketCache.getMarketIdByName(marketName);
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("marketId", marketId);
+        /*String marketId = MarketCache.getMarketIdByName(marketName);
+        paramMap.put("marketId", marketId); 不建议继续使用，直接使用更直观的marketName，格式：zt_usdt*/
+
+        paramMap.put("marketName", marketName);
         paramMap.put("pageSize", pageSize);
         paramMap.put("pageIndex", pageIndex);//页码，从1开始计算
 
@@ -178,10 +183,11 @@ public class Api {
      * @return
      */
     public static String getUserEntrustRecordFromCache(String marketName) {
-        String marketId = MarketCache.getMarketIdByName(marketName);
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("marketId", marketId);
+        /*String marketId = MarketCache.getMarketIdByName(marketName);
+        paramMap.put("marketId", marketId); 不建议继续使用，直接使用更直观的marketName，格式：zt_usdt*/
 
+        paramMap.put("marketName", marketName);
         Map<String, String> header;
         header = SignUtils.getHeaderOfKeyValue(GlobalConstant.API_ID, GlobalConstant.API_SECRET, paramMap);
 
@@ -209,10 +215,11 @@ public class Api {
      */
     public static String getUserEntrustList(String marketName,Integer pageIndex, Integer paegSize,Integer type,
                                             Integer status,Long startDateTime,Long endDateTime) {
-
-        String marketId = MarketCache.getMarketIdByName(marketName);
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("marketId", marketId);
+        /*String marketId = MarketCache.getMarketIdByName(marketName);
+        paramMap.put("marketId", marketId); 不建议继续使用，直接使用更直观的marketName，格式：zt_usdt*/
+
+        paramMap.put("marketName", marketName);
         paramMap.put("pageIndex", pageIndex);
         paramMap.put("pageSize", paegSize);
         if(type != null){
