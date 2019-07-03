@@ -28,8 +28,8 @@ public class ApiTest {
 
     static {
         //TODO:域名请根据文档提供的域名自行设置
-        GlobalConstant.ES_HOST = "http://192.168.20.13:9000";
-        GlobalConstant.KLINE_WS_HOST = "ws://192.168.20.13:28080";
+        GlobalConstant.ES_HOST = "https://www.zbg.com";
+        GlobalConstant.KLINE_WS_HOST = "wss://kline.zbg.com";
         GlobalConstant.KLINE_HTTP_HOST = GlobalConstant.KLINE_WS_HOST.replaceFirst("wss", "https")
                 .replaceFirst("ws", "http");
 
