@@ -113,7 +113,7 @@ public class Api {
         header = SignUtils.getHeaderOfBodyJson(GlobalConstant.API_ID, GlobalConstant.API_SECRET, bodyEntrustMap);
 
         try {
-            String returnMsg = HttpUtils.doPost("https://www.zbg.com", "/exchange/entrust/controller/website/EntrustController/batchCancelEntrust", bodyEntrustMap, header, 10);
+            String returnMsg = HttpUtils.doPost("https://www.zbg.com", "/exchange/entrust/controller/website/EntrustController/cancelEntrustMore", bodyEntrustMap, header, 10);
             return returnMsg;
         } catch (Exception e) {
             e.printStackTrace();
