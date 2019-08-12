@@ -96,6 +96,31 @@ public class Api {
 
         return null;
     }
+    
+    /**
+     * 批量取消委托单
+     * @param marketName //市场名称,如btc_usdt
+     * @param entrustIds 可不传，委托单列表
+     * @param type //可不传，买卖类型：0 卖出 1 购买
+     * @return
+     */
+    public static String batchCancelMore(String marketName, List<String> entrustIds, Integer type) {
+        Map<String, Object> bodyEntrustMap = new HashMap();
+        bodyEntrustMap.put("marketName", marketName);
+        bodyEntrustMap.put("entrustIds", entrustIds);
+        bodyEntrustMap.put("type", type);
+        Map<String, String> header;
+        header = SignUtils.getHeaderOfBodyJson(GlobalConstant.API_ID, GlobalConstant.API_SECRET, bodyEntrustMap);
+
+        try {
+            String returnMsg = HttpUtils.doPost("https://www.zbg.com", "/exchange/entrust/controller/website/EntrustController/batchCancelEntrust", bodyEntrustMap, header, 10);
+            return returnMsg;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     /**
      * 取消委托单
